@@ -7,6 +7,7 @@ const categoryTitles = {
   bathtubs: "Bathtubs",
   kitchen: "Kitchen",
   "living-room": "Living Room",
+  outdoor: "Outdoor",
 };
 
 const Category = () => {

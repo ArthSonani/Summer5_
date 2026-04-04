@@ -66,6 +66,20 @@ const Header = ({ cartCount = 0 }) => {
             Kitchen
           </NavLink>
           <NavLink 
+            to="/category/living-room" 
+            className="hover:underline underline-offset-4"
+            activeClassName="underline"
+          >
+            Living
+          </NavLink>
+          <NavLink 
+            to="/category/outdoor" 
+            className="hover:underline underline-offset-4"
+            activeClassName="underline"
+          >
+            Outdoor
+          </NavLink>
+          <NavLink 
             to="/contact" 
             className="hover:underline underline-offset-4"
             activeClassName="underline"
