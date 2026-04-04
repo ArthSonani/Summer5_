@@ -1,6 +1,6 @@
 import Layout from "@/components/layout/Layout";
-import { Input } from "@/components/ui/Input";
-import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const SignUp = () => {
