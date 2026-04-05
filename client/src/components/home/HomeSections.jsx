@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import useInView from "@/hooks/use-in-view";
 
 const HeroSection = () => {
   return (
@@ -25,11 +26,18 @@ const HeroSection = () => {
 };
 
 const DiscoverSection = () => {
+  const { ref, isInView } = useInView();
+
   return (
     <section className="py-20 px-6 text-center ">
-      <div className="intersect-half intersect-once opacity-0 translate-y-10 
-              intersect:opacity-100 intersect:translate-y-0 
-              transition-all duration-700 ease-out">
+      <div
+        ref={ref}
+        className={`transition-all duration-700 ease-out delay-300 ${
+          isInView
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-10"
+        }`}
+      >
         <h2 className="text-4xl md:text-5xl font-serif mb-8 font-medium ">
           Crafted for the Discerning
         </h2>

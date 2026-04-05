@@ -18,19 +18,27 @@ const Header = ({ cartCount = 0 }) => {
 
       {/* Main Header */}
       <div className="bg-background py-6 px-6 lg:px-12">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+        <div className="max-w-7xl mx-auto flex items-center">
           {/* Search Icon */}
-            <button className="p-2 hover:opacity-70 transition-opacity" aria-label="Search">
+          <div className="flex-1">
+            <button
+              className="p-2 hover:opacity-70 transition-opacity"
+              aria-label="Search"
+            >
               <Search className="w-5 h-5" />
             </button>
+          </div>
 
           {/* Logo */}
-          <Link to="/" className="text-3xl lg:text-4xl tracking-[0.3em] font-serif font-medium">
+          <Link
+            to="/"
+            className="text-3xl lg:text-4xl tracking-[0.3em] font-serif font-medium text-center flex-1"
+          >
             SUMMER5
           </Link>
 
           {/* Account & Cart Icons */}
-          <div className="flex items-center gap-4">
+          <div className="flex-1 flex items-center justify-end gap-4">
             {user ? (
               <Link
                 to="/account"
