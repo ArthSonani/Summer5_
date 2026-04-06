@@ -5,14 +5,16 @@ import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <footer className="bg-footer text-footer-foreground">
+    <footer className="bg-[#392720] text-footer-foreground">
       {/* Main Footer */}
       <div className="px-6 lg:px-12 py-16">
         <div className="max-w-7xl mx-auto">
+          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {/* Subscribe Section */}
             <div>
-              <h3 className="font-serif text-xl mb-6">Subscribe to our emails</h3>
+            <h1 className="text-6xl mb-5 ">Summer 5</h1>
+              <h3 className="font-serif text-xl mb-6">Unlock Exclusive Offers Straight to Your Inbox</h3>
               <div className="flex">
                 <Input 
                   type="email" 
@@ -30,12 +32,32 @@ const Footer = () => {
             </div>
 
             {/* Quick Links */}
-            <div className="text-center">
-              <h3 className="font-serif text-xl mb-6">Quick links</h3>
+            <div className="text-left mx-20">
+              <h3 className="font-serif text-xl mb-6 font-medium">Quick links</h3>
               <ul className="space-y-3">
                 <li>
                   <Link to="/search" className="hover:underline text-sm">
                     Search
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/privacy-policy" className="hover:underline text-sm">
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/refund-policy" className="hover:underline text-sm">
+                    Refund Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/shipping-policy" className="hover:underline text-sm">
+                    Shipping Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/terms-of-service" className="hover:underline text-sm">
+                    Terms of Service
                   </Link>
                 </li>
               </ul>

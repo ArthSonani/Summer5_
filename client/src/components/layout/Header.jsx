@@ -9,7 +9,7 @@ const Header = ({ cartCount = 0 }) => {
   return (
     <header className="w-full">
       {/* Announcement Bar */}
-      <div className="bg-announcement text-announcement-foreground py-3 text-center text-sm">
+      <div className="bg-announcement text-announcement-foreground py-3 text-center text-sm bg-gradient-to-r from-[#E3DBCF] via-[#BBB1A4] to-[#E3DBCF] ">
         <Link to="/shop" className="hover:underline inline-flex items-center gap-1">
           Enjoy Free Shipping Sitewide
           <span aria-hidden="true">→</span>

@@ -44,6 +44,26 @@ export const products = [
     description:
       "Tired of messy sinks and inefficient kitchen setups? Upgrade your daily kitchen routine with our premium stainless steel waterfall sink.",
   },
+  {
+    id: "4",
+    name:
+      "Garden Furniture",
+    slug: "Garden Furniture",
+    price: 1015.43,
+    // originalPrice: 840.18,
+    image:
+      "https://images.unsplash.com/photo-1613685302957-3a6fc45346ef?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b3V0ZG9vciUyMGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3Dfit=crop",
+    images: [
+      "https://images.unsplash.com/photo-1613685302957-3a6fc45346ef?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8b3V0ZG9vciUyMGZ1cm5pdHVyZXxlbnwwfHwwfHx8MA%3D%3Dfit=crop",
+      "https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=600&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1556909172-54557c7e4fb7?w=600&h=600&fit=crop",
+    ],
+    category: "outdoor",
+    color: "Beige",
+    colors: ["Beige"],
+    description:
+      "Tired of messy sinks and inefficient kitchen setups? Upgrade your daily kitchen routine" 
+  },
 ]
 
 export const getProductBySlug = (slug) => {
