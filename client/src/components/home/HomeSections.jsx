@@ -57,7 +57,7 @@ const CategorySection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
 
           {/* Image */}
-          <div className="aspect-[4/3] sm:aspect-video overflow-hidden rounded-2xl">
+            <div className="order-1 lg:order-1 aspect-[4/3] sm:aspect-video overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGl2aW5nJTIwcm9vbXxlbnwwfHwwfHx8MA%3D%3Dfit=crop"
               alt="Living Room"
@@ -66,7 +66,7 @@ const CategorySection = () => {
           </div>
 
           {/* Content */}
-          <div className="lg:pl-12 text-center lg:text-left">
+            <div className="order-2 lg:order-2 lg:pl-12 text-center lg:text-left">
             <span className="text-xs sm:text-sm tracking-widest text-[#b3aeaa] mb-3 sm:mb-4 block font-medium">
               HOME ESSENTIALS
             </span>
@@ -87,7 +87,7 @@ const CategorySection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
 
           {/* Content */}
-          <div className="lg:pl-12 text-center lg:text-left">
+            <div className="order-2 lg:order-2 lg:pl-12 text-center lg:text-left">
             <span className="text-xs sm:text-sm tracking-widest text-[#b3aeaa] mb-3 sm:mb-4 block font-medium">
               HOME ESSENTIALS
             </span>
@@ -103,7 +103,7 @@ const CategorySection = () => {
           </div>
 
           {/* Image */}
-          <div className="aspect-[4/3] sm:aspect-video overflow-hidden rounded-2xl">
+            <div className="order-1 lg:order-2 aspect-[4/3] sm:aspect-video overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1507652313519-d4e9174996dd?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmF0aHJvb218ZW58MHx8MHx8fDA%3Dfit=crop"
               alt="Bathroom"
@@ -117,7 +117,7 @@ const CategorySection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
 
           {/* Image */}
-          <div className="aspect-[4/3] sm:aspect-video overflow-hidden rounded-2xl">
+            <div className="order-1 lg:order-1 aspect-[4/3] sm:aspect-video overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1632583824020-937ae9564495?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGtpdGNoZW58ZW58MHx8MHx8fDA%3Dfit=crop"
               alt="Kitchen"
@@ -125,7 +125,7 @@ const CategorySection = () => {
             />
           </div>
           {/* Content */}
-          <div className="lg:pl-12 text-center lg:text-left">
+            <div className="order-2 lg:order-1 lg:pl-12 text-center lg:text-left">
             <span className="text-xs sm:text-sm tracking-widest text-[#b3aeaa] mb-3 sm:mb-4 block font-medium">
               HOME ESSENTIALS
             </span>
@@ -145,7 +145,7 @@ const CategorySection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
 
           {/* Content */}
-          <div className="lg:pl-12 text-center lg:text-left">
+            <div className="order-2 lg:order-1 lg:pl-12 text-center lg:text-left">
             <span className="text-xs sm:text-sm tracking-widest text-[#b3aeaa] mb-3 sm:mb-4 block font-medium">
               HOME ESSENTIALS
             </span>
@@ -161,7 +161,7 @@ const CategorySection = () => {
           </div>
 
           {/* Image */}
-          <div className="aspect-[4/3] sm:aspect-video overflow-hidden rounded-2xl">
+            <div className="order-1 lg:order-2 aspect-[4/3] sm:aspect-video overflow-hidden rounded-2xl">
             <img
               src="https://images.unsplash.com/photo-1602860739945-9a61573cd62d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cGF0aW98ZW58MHx8MHx8fDA%3Dfit=crop"
               alt="Bathroom"
