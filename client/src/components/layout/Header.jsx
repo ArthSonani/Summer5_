@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Search, User, ShoppingBag } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/context/AuthContext";
@@ -7,6 +7,27 @@ import { useAuth } from "@/context/AuthContext";
 const Header = ({ cartCount = 0 }) => {
   const { user } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const handleOutsideClick = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [isMenuOpen]);
 
   return (
     <header className="w-full">
@@ -48,7 +69,7 @@ const Header = ({ cartCount = 0 }) => {
               </div>
             )}
             {!user && (
-              <div className="relative sm:hidden">
+              <div className="relative sm:hidden" ref={menuRef}>
                 <button
                   type="button"
                   className="p-2 hover:opacity-70 transition-opacity"
@@ -61,21 +82,74 @@ const Header = ({ cartCount = 0 }) => {
                   <span className="mt-1 block h-[2px] w-5 bg-current" />
                 </button>
                 {isMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-40 rounded-md border bg-background shadow-lg z-50">
-                    <Link
-                      to="/login"
-                      className="block px-4 py-2 text-sm hover:bg-muted"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Sign in
-                    </Link>
-                    <Link
-                      to="/signup"
-                      className="block px-4 py-2 text-sm hover:bg-muted"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Sign up
-                    </Link>
+                  <div className="absolute right-0 mt-2 w-56 rounded-md border bg-background shadow-lg z-50">
+                    <div className="py-1">
+                      <Link
+                        to="/login"
+                        className="block px-4 py-2 text-sm hover:bg-muted"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Sign in
+                      </Link>
+                      <Link
+                        to="/signup"
+                        className="block px-4 py-2 text-sm hover:bg-muted"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Sign up
+                      </Link>
+                    </div>
+                    <div className="border-t" />
+                    <div className="py-1">
+                      <NavLink
+                        to="/shop"
+                        className="block px-4 py-2 text-sm hover:bg-muted whitespace-nowrap"
+                        activeClassName="underline"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Shop All
+                      </NavLink>
+                      <NavLink
+                        to="/category/bathroom"
+                        className="block px-4 py-2 text-sm hover:bg-muted whitespace-nowrap"
+                        activeClassName="underline"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Bathrooms
+                      </NavLink>
+                      <NavLink
+                        to="/category/kitchen"
+                        className="block px-4 py-2 text-sm hover:bg-muted whitespace-nowrap"
+                        activeClassName="underline"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Kitchen
+                      </NavLink>
+                      <NavLink
+                        to="/category/living-room"
+                        className="block px-4 py-2 text-sm hover:bg-muted whitespace-nowrap"
+                        activeClassName="underline"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Living
+                      </NavLink>
+                      <NavLink
+                        to="/category/outdoor"
+                        className="block px-4 py-2 text-sm hover:bg-muted whitespace-nowrap"
+                        activeClassName="underline"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Outdoor
+                      </NavLink>
+                      <NavLink
+                        to="/contact"
+                        className="block px-4 py-2 text-sm hover:bg-muted whitespace-nowrap"
+                        activeClassName="underline"
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        Contact
+                      </NavLink>
+                    </div>
                   </div>
                 )}
               </div>
@@ -92,7 +166,7 @@ const Header = ({ cartCount = 0 }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="mt-4 flex gap-6 overflow-x-auto px-2 text-sm sm:justify-center sm:gap-8 sm:overflow-visible">
+        <nav className="mt-4 hidden text-sm sm:flex sm:justify-center sm:gap-8">
           <NavLink 
             to="/shop" 
             className="hover:underline underline-offset-4 whitespace-nowrap"
