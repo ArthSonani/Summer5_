@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Layout from "@/components/layout/Layout";
 import ProductCard from "@/components/ProductCard";
-import { products } from "@/data/products";
 import { ChevronDown } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 import {
   Select,
   SelectContent,
@@ -12,7 +12,37 @@ import {
 } from "@/components/ui/select";
 
 const ShopAll = () => {
+  const { apiUrl } = useAuth();
   const [sortBy, setSortBy] = useState("alphabetically-asc");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      setLoading(true);
+      setError("");
+
+      try {
+        const response = await fetch(`${apiUrl}/api/products`);
+        if (!response.ok) {
+          throw new Error("Failed to load products");
+        }
+        const data = await response.json();
+        const normalized = data.map((product) => ({
+          ...product,
+          id: product.id || product._id,
+        }));
+        setProducts(normalized);
+      } catch (err) {
+        setError(err.message || "Failed to load products");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [apiUrl]);
 
   const sortedProducts = [...products].sort((a, b) => {
     switch (sortBy) {
@@ -72,11 +102,17 @@ const ShopAll = () => {
           </div>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sortedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
+          {loading ? (
+            <p className="text-sm text-muted-foreground">Loading products...</p>
+          ) : error ? (
+            <p className="text-sm text-destructive">{error}</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {sortedProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </Layout>

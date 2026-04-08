@@ -55,13 +55,20 @@ const Header = ({ cartCount = 0 }) => {
           {/* Account & Cart Icons */}
           <div className="flex-1 flex items-center justify-end gap-4">
             {user ? (
-              <Link
-                to="/account"
-                className="p-2 hover:opacity-70 transition-opacity"
-                aria-label="Account"
-              >
-                <User className="w-5 h-5" />
-              </Link>
+              <div className="flex items-center gap-3">
+                {user.isAdmin && (
+                  <Link to="/admin" className="text-sm hover:underline">
+                    Admin
+                  </Link>
+                )}
+                <Link
+                  to="/account"
+                  className="p-2 hover:opacity-70 transition-opacity"
+                  aria-label="Account"
+                >
+                  <User className="w-5 h-5" />
+                </Link>
+              </div>
             ) : (
               <div className="hidden sm:flex items-center gap-3 text-sm">
                 <Link to="/login" className="hover:underline">Sign in</Link>
@@ -167,6 +174,15 @@ const Header = ({ cartCount = 0 }) => {
 
         {/* Navigation */}
         <nav className="mt-4 hidden text-sm sm:flex sm:justify-center sm:gap-8">
+          {user?.isAdmin && (
+            <NavLink
+              to="/admin"
+              className="hover:underline underline-offset-4 whitespace-nowrap"
+              activeClassName="underline"
+            >
+              Admin
+            </NavLink>
+          )}
           <NavLink 
             to="/shop" 
             className="hover:underline underline-offset-4 whitespace-nowrap"

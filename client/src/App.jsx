@@ -15,6 +15,7 @@ import NotFound from "./pages/NotFound";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Account from "./pages/Account";
+import AdminProducts from "./pages/AdminProducts";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
 import ShippingPolicy from "./pages/ShippingPolicy";
@@ -40,6 +41,7 @@ const App = () => (
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/admin" element={<AdminProducts />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />}/>
               <Route path="/refund-policy" element={<RefundPolicy/>}/>
               <Route path="/shipping-policy" element={<ShippingPolicy/>}/>
