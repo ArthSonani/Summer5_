@@ -28,6 +28,10 @@ const userSchema = new mongoose.Schema(
     avatarUrl: {
       type: String,
     },
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
