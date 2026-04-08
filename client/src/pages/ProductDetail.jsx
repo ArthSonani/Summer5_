@@ -1,19 +1,46 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
-import { getProductBySlug } from "@/data/products";
 import { useCart } from "@/context/CartContext";
 import { useToast } from "@/hooks/use-toast";
 import { Minus, Plus } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
 
 const ProductDetail = () => {
   const { slug } = useParams();
-  const product = getProductBySlug(slug || "");
+  const { apiUrl } = useAuth();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
   const { addToCart } = useCart();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (!slug) return;
+
+    const fetchProduct = async () => {
+      setLoading(true);
+      setError("");
+
+      try {
+        const response = await fetch(`${apiUrl}/api/products/${slug}`);
+        if (!response.ok) {
+          throw new Error("Product not found");
+        }
+        const data = await response.json();
+        setProduct({ ...data, id: data.id || data._id });
+      } catch (err) {
+        setError(err.message || "Failed to load product");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [apiUrl, slug]);
 
   const handleAddToCart = () => {
     if (product && product.status !== "soldout") {
@@ -22,11 +49,21 @@ const ProductDetail = () => {
     }
   };
 
-  if (!product) {
+  if (loading) {
     return (
       <Layout>
         <div className="px-6 lg:px-12 py-12 text-center">
-          <h1 className="text-2xl">Product not found</h1>
+          <p className="text-sm text-muted-foreground">Loading product...</p>
+        </div>
+      </Layout>
+    );
+  }
+
+  if (error || !product) {
+    return (
+      <Layout>
+        <div className="px-6 lg:px-12 py-12 text-center">
+          <h1 className="text-2xl">{error || "Product not found"}</h1>
         </div>
       </Layout>
     );

@@ -35,6 +35,18 @@ const requireAuth = (req, res, next) => {
   }
 };
 
+const requireAdmin = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId).select("isAdmin");
+    if (!user || !user.isAdmin) {
+      return res.status(403).json({ message: "Admin access required" });
+    }
+    return next();
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to verify admin" });
+  }
+};
+
 const googleClientId = process.env.GOOGLE_CLIENT_ID;
 const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const googleCallbackUrl =
@@ -119,7 +131,12 @@ router.post("/signup", async (req, res) => {
     const token = signToken(user.id);
 
     res.status(201).json({
-      user: { id: user.id, name: user.name, email: user.email },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
       token,
     });
   } catch (error) {
@@ -151,7 +168,12 @@ router.post("/login", async (req, res) => {
 
     const token = signToken(user.id);
     res.json({
-      user: { id: user.id, name: user.name, email: user.email },
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
       token,
     });
   } catch (error) {
@@ -205,6 +227,7 @@ router.get("/me", requireAuth, async (req, res) => {
         email: user.email,
         provider: user.provider,
         avatarUrl: user.avatarUrl,
+        isAdmin: user.isAdmin,
       },
     });
   } catch (error) {
@@ -212,4 +235,5 @@ router.get("/me", requireAuth, async (req, res) => {
   }
 });
 
+export { requireAuth, requireAdmin };
 export default router;

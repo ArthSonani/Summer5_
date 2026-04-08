@@ -54,10 +54,20 @@ const Account = () => {
                   <span className="capitalize">{user.provider || "local"}</span>
                 </div>
                 <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Role</span>
+                  <span>{user.isAdmin ? "Admin" : "Customer"}</span>
+                </div>
+                <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">User ID</span>
                   <span>{user.id}</span>
                 </div>
               </div>
+
+              {user.isAdmin && (
+                <Button asChild>
+                  <Link to="/admin">Go to admin dashboard</Link>
+                </Button>
+              )}
 
               <Button variant="outline" onClick={logout}>
                 Sign out
