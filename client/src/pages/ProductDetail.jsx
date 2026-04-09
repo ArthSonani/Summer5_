@@ -103,7 +103,7 @@ const ProductDetail = () => {
             
             {/* Product Images */}
             <div>
-              <div className="aspect-square overflow-hidden bg-card mb-4">
+              <div className="aspect-square overflow-hidden bg-card mb-4 rounded-3xl">
                 <img
                   src={images[selectedImage]}
                   alt={product.name}
@@ -117,7 +117,7 @@ const ProductDetail = () => {
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`aspect-square overflow-hidden bg-card border-2 ${
+                      className={`aspect-square overflow-hidden bg-card border-2 rounded-2xl ${
                         selectedImage === index
                           ? "border-primary"
                           : "border-transparent"
