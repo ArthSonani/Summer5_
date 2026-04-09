@@ -13,9 +13,8 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-  const { addToCart } = useCart();
+  const { items, addToCart, updateQuantity } = useCart();
   const { toast } = useToast();
 
   useEffect(() => {
@@ -42,11 +41,32 @@ const ProductDetail = () => {
     fetchProduct();
   }, [apiUrl, slug]);
 
+  const cartItem = product
+    ? items.find((item) => item.product.id === product.id)
+    : null;
+  const inCartQuantity = cartItem?.quantity || 0;
+
   const handleAddToCart = () => {
-    if (product && product.status !== "soldout") {
-      addToCart(product, quantity);
-      toast({ title: `${product.name} added to cart` });
+    if (!product || product.status === "soldout") {
+      return;
     }
+
+    addToCart(product, 1);
+    toast({ title: `${product.name} added to cart` });
+  };
+
+  const handleDecrease = () => {
+    if (!product || inCartQuantity <= 0) {
+      return;
+    }
+    updateQuantity(product.id, inCartQuantity - 1);
+  };
+
+  const handleIncrease = () => {
+    if (!product || inCartQuantity <= 0) {
+      return;
+    }
+    updateQuantity(product.id, inCartQuantity + 1);
   };
 
   if (loading) {
@@ -163,45 +183,38 @@ const ProductDetail = () => {
                 </div>
               )}
 
-              {/* Quantity */}
-              <div className="mb-6">
-                <span className="text-sm block mb-2">
-                  Quantity {quantity > 0 && `(${quantity} in cart)`}
-                </span>
-
-                <div className="flex items-center border border-border">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="p-3 hover:bg-muted transition-colors"
-                    aria-label="Decrease quantity"
-                  >
-                    <Minus className="w-4 h-4" />
-                  </button>
-
-                  <span className="px-6 py-3 min-w-[60px] text-center">
-                    {quantity}
-                  </span>
-
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="p-3 hover:bg-muted transition-colors"
-                    aria-label="Increase quantity"
-                  >
-                    <Plus className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
               {/* Add to Cart */}
               <div className="space-y-3 mb-8">
-                <Button
-                  variant="outline"
-                  className="w-full py-6 text-base"
-                  disabled={product.status === "soldout"}
-                  onClick={handleAddToCart}
-                >
-                  {product.status === "soldout" ? "Sold out" : "Add to cart"}
-                </Button>
+                {inCartQuantity > 0 ? (
+                  <div className="flex items-center justify-between border border-border">
+                    <button
+                      onClick={handleDecrease}
+                      className="p-4 hover:bg-muted transition-colors"
+                      aria-label="Decrease quantity"
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <span className="px-6 py-3 min-w-[80px] text-center">
+                      {inCartQuantity}
+                    </span>
+                    <button
+                      onClick={handleIncrease}
+                      className="p-4 hover:bg-muted transition-colors"
+                      aria-label="Increase quantity"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                ) : (
+                  <Button
+                    variant="outline"
+                    className="w-full py-6 text-base"
+                    disabled={product.status === "soldout"}
+                    onClick={handleAddToCart}
+                  >
+                    {product.status === "soldout" ? "Sold out" : "Add to cart"}
+                  </Button>
+                )}
 
                 <Button className="w-full py-6 text-base bg-[#ffc439] hover:bg-[#f0b72f] text-black">
                   Pay with

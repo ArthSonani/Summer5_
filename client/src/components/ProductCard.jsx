@@ -8,11 +8,11 @@ const ProductCard = ({ product }) => {
 
   return (
     <Link to={`/product/${product.slug}`} className="group block">
-      <div className="relative aspect-square overflow-hidden bg-card mb-4 duration-300 border border-transparent group-hover:border-[#392720] rounded-3xl">
+      <div className="relative aspect-square overflow-hidden bg-card mb-4 duration-300 rounded-3xl">
         <img 
           src={product.image} 
           alt={product.name}
-          className="w-full h-full object-cover transition-transform "
+          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
         />
         
         {/* Status Badge */}

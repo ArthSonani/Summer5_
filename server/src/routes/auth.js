@@ -213,7 +213,7 @@ router.get(
 router.get("/me", requireAuth, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select(
-      "name email provider avatarUrl"
+      "name email provider avatarUrl isAdmin"
     );
 
     if (!user) {
