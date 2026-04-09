@@ -245,118 +245,140 @@ const AdminProducts = () => {
     <Layout>
       <div className="px-6 lg:px-12 py-12">
         <div className="max-w-6xl mx-auto space-y-10">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-serif">Admin Products</h1>
-            <p className="text-muted-foreground mt-2">
-              Create, update, and manage product listings.
-            </p>
+          <div className="grid md:grid-cols-[1.1fr_1fr] gap-8 items-start">
+            <div className="bg-secondary/60 p-8 md:p-10">
+              <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+                Admin studio
+              </p>
+              <h1 className="text-4xl md:text-5xl font-serif mt-4">Admin products</h1>
+              <p className="text-sm text-muted-foreground mt-4">
+                Create, update, and manage product listings with full catalog control.
+              </p>
+              <div className="mt-8 space-y-3 text-sm text-muted-foreground">
+                <p>- Keep your catalog tidy and on brand</p>
+                <p>- Update pricing and inventory status</p>
+                <p>- Curate the latest collection drops</p>
+              </div>
+            </div>
+            <div className="border border-border bg-card p-8 md:p-10 rounded-2xl">
+              <h2 className="text-2xl font-serif">Product form</h2>
+              <p className="text-sm text-muted-foreground mt-2">
+                {editingId ? "Update product details below." : "Add a new product to the catalog."}
+              </p>
+              <form onSubmit={handleSubmit} className="space-y-6 mt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Input
+                    name="name"
+                    placeholder="Product name"
+                    value={formValues.name}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="slug"
+                    placeholder="Slug (unique)"
+                    value={formValues.slug}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="price"
+                    type="number"
+                    step="0.01"
+                    placeholder="Price"
+                    value={formValues.price}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="originalPrice"
+                    type="number"
+                    step="0.01"
+                    placeholder="Original price (optional)"
+                    value={formValues.originalPrice}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    name="image"
+                    placeholder="Main image URL"
+                    value={formValues.image}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Input
+                    name="images"
+                    placeholder="Additional image URLs (comma separated)"
+                    value={formValues.images}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    name="category"
+                    placeholder="Category"
+                    value={formValues.category}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Select
+                    value={formValues.status}
+                    onValueChange={(value) =>
+                      setFormValues((prev) => ({ ...prev, status: value }))
+                    }
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Status" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="active">Active</SelectItem>
+                      <SelectItem value="sale">Sale</SelectItem>
+                      <SelectItem value="soldout">Sold out</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    name="color"
+                    placeholder="Primary color (optional)"
+                    value={formValues.color}
+                    onChange={handleChange}
+                  />
+                  <Input
+                    name="colors"
+                    placeholder="Color options (comma separated)"
+                    value={formValues.colors}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <Textarea
+                  name="description"
+                  placeholder="Description"
+                  value={formValues.description}
+                  onChange={handleChange}
+                  rows={4}
+                />
+
+                <div className="flex flex-wrap gap-3">
+                  <Button type="submit">
+                    {editingId ? "Update product" : "Create product"}
+                  </Button>
+                  {editingId && (
+                    <Button type="button" variant="outline" onClick={resetForm}>
+                      Cancel edit
+                    </Button>
+                  )}
+                </div>
+              </form>
+            </div>
           </div>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Input
-                name="name"
-                placeholder="Product name"
-                value={formValues.name}
-                onChange={handleChange}
-                required
-              />
-              <Input
-                name="slug"
-                placeholder="Slug (unique)"
-                value={formValues.slug}
-                onChange={handleChange}
-                required
-              />
-              <Input
-                name="price"
-                type="number"
-                step="0.01"
-                placeholder="Price"
-                value={formValues.price}
-                onChange={handleChange}
-                required
-              />
-              <Input
-                name="originalPrice"
-                type="number"
-                step="0.01"
-                placeholder="Original price (optional)"
-                value={formValues.originalPrice}
-                onChange={handleChange}
-              />
-              <Input
-                name="image"
-                placeholder="Main image URL"
-                value={formValues.image}
-                onChange={handleChange}
-                required
-              />
-              <Input
-                name="images"
-                placeholder="Additional image URLs (comma separated)"
-                value={formValues.images}
-                onChange={handleChange}
-              />
-              <Input
-                name="category"
-                placeholder="Category"
-                value={formValues.category}
-                onChange={handleChange}
-                required
-              />
-              <Select
-                value={formValues.status}
-                onValueChange={(value) =>
-                  setFormValues((prev) => ({ ...prev, status: value }))
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="active">Active</SelectItem>
-                  <SelectItem value="sale">Sale</SelectItem>
-                  <SelectItem value="soldout">Sold out</SelectItem>
-                </SelectContent>
-              </Select>
-              <Input
-                name="color"
-                placeholder="Primary color (optional)"
-                value={formValues.color}
-                onChange={handleChange}
-              />
-              <Input
-                name="colors"
-                placeholder="Color options (comma separated)"
-                value={formValues.colors}
-                onChange={handleChange}
-              />
-            </div>
-
-            <Textarea
-              name="description"
-              placeholder="Description"
-              value={formValues.description}
-              onChange={handleChange}
-              rows={4}
-            />
-
-            <div className="flex flex-wrap gap-3">
-              <Button type="submit">
-                {editingId ? "Update product" : "Create product"}
-              </Button>
-              {editingId && (
-                <Button type="button" variant="outline" onClick={resetForm}>
-                  Cancel edit
-                </Button>
-              )}
-            </div>
-          </form>
 
           {error && <p className="text-sm text-destructive">{error}</p>}
 
-          <div className="border-t border-border pt-8 space-y-6">
+          <div className="border border-border bg-card rounded-2xl p-6 md:p-8 space-y-6">
+            <div>
+              <h2 className="text-2xl font-serif">Catalog filters</h2>
+              <p className="text-sm text-muted-foreground mt-2">
+                Refine the catalog list by category, status, or sorting rules.
+              </p>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <Input
                 placeholder="Search by name or slug"
@@ -373,14 +395,16 @@ const AdminProducts = () => {
                 }
               />
               <Select
-                value={filters.status}
-                onValueChange={(value) => handleFilterChange("status", value)}
+                value={filters.status || "all"}
+                onValueChange={(value) =>
+                  handleFilterChange("status", value === "all" ? "" : value)
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Filter by status" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="">All statuses</SelectItem>
+                  <SelectItem value="all">All statuses</SelectItem>
                   <SelectItem value="active">Active</SelectItem>
                   <SelectItem value="sale">Sale</SelectItem>
                   <SelectItem value="soldout">Sold out</SelectItem>
@@ -423,13 +447,13 @@ const AdminProducts = () => {
                 {products.map((product) => (
                   <div
                     key={product._id}
-                    className="flex flex-col gap-4 border border-border rounded-lg p-4 md:flex-row md:items-center md:justify-between"
+                    className="flex flex-col gap-4 border border-border rounded-xl p-4 md:flex-row md:items-center md:justify-between"
                   >
                     <div className="flex items-center gap-4">
                       <img
                         src={product.image}
                         alt={product.name}
-                        className="h-16 w-16 rounded object-cover"
+                        className="h-16 w-16 rounded-lg object-cover"
                       />
                       <div>
                         <p className="font-medium">{product.name}</p>

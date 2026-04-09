@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import { Search, User, ShoppingBag } from "lucide-react";
+import { User, ShoppingBag } from "lucide-react";
 import { NavLink } from "@/components/NavLink";
 import { useAuth } from "@/context/AuthContext";
 
@@ -29,20 +29,13 @@ const Header = ({ cartCount = 0 }) => {
     };
   }, [isMenuOpen]);
 
+
   return (
     <header className="w-full">
       {/* Main Header */}
       <div className="bg-background py-6 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto flex items-center">
-          {/* Search Icon */}
-          <div className="flex-1">
-            <button
-              className="p-2 hover:opacity-70 transition-opacity"
-              aria-label="Search"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-          </div>
+          <div className="flex-1" />
 
           {/* Logo */}
           <Link
@@ -56,11 +49,6 @@ const Header = ({ cartCount = 0 }) => {
           <div className="flex-1 flex items-center justify-end gap-4">
             {user ? (
               <div className="flex items-center gap-3">
-                {user.isAdmin && (
-                  <Link to="/admin" className="text-sm hover:underline">
-                    Admin
-                  </Link>
-                )}
                 <Link
                   to="/account"
                   className="p-2 hover:opacity-70 transition-opacity"
@@ -174,15 +162,6 @@ const Header = ({ cartCount = 0 }) => {
 
         {/* Navigation */}
         <nav className="mt-4 hidden text-sm sm:flex sm:justify-center sm:gap-8">
-          {user?.isAdmin && (
-            <NavLink
-              to="/admin"
-              className="hover:underline underline-offset-4 whitespace-nowrap"
-              activeClassName="underline"
-            >
-              Admin
-            </NavLink>
-          )}
           <NavLink 
             to="/shop" 
             className="hover:underline underline-offset-4 whitespace-nowrap"
