@@ -101,6 +101,7 @@ const DiscoverSection = () => {
   );
 };
 
+
 const CategorySection = () => {
   return (
     <section className="py-20 px-6 lg:px-12 bg-[#231a16] text-white">
@@ -150,7 +151,7 @@ const CategorySection = () => {
               link: "/category/outdoor",
             },
           ].map((item) => (
-            <div key={item.title} className="group border border-white/10 bg-[#2f2420]">
+            <div key={item.title} className="group border border-white/10 bg-[#2f2420] rounded-2xl overflow-hidden">
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={item.image}
