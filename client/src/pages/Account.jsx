@@ -2,9 +2,43 @@ import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Account = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, apiUrl, token } = useAuth();
+  const [orders, setOrders] = useState([]);
+  const [ordersLoading, setOrdersLoading] = useState(false);
+  const [ordersError, setOrdersError] = useState("");
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      if (!user || !token) return;
+
+      setOrdersLoading(true);
+      setOrdersError("");
+
+      try {
+        const response = await fetch(`${apiUrl}/api/orders`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to load orders");
+        }
+
+        const data = await response.json();
+        setOrders(data.orders || []);
+      } catch (error) {
+        setOrdersError(error.message || "Failed to load orders");
+      } finally {
+        setOrdersLoading(false);
+      }
+    };
+
+    fetchOrders();
+  }, [apiUrl, token, user]);
 
   return (
     <Layout>
@@ -44,7 +78,7 @@ const Account = () => {
                   </div>
                 </div>
               ) : (
-                <div className="space-y-6">
+                <div className="space-y-10">
                   <div className="flex items-center gap-4">
                     {user.avatarUrl ? (
                       <img
@@ -89,6 +123,52 @@ const Account = () => {
                     <Button variant="outline" onClick={logout} className="py-6 px-6">
                       Sign out
                     </Button>
+                  </div>
+
+                  <div className="border-t border-border pt-6">
+                    <h2 className="text-2xl font-serif mb-4">Order history</h2>
+
+                    {ordersLoading ? (
+                      <p className="text-sm text-muted-foreground">Loading orders...</p>
+                    ) : ordersError ? (
+                      <p className="text-sm text-destructive">{ordersError}</p>
+                    ) : orders.length === 0 ? (
+                      <p className="text-sm text-muted-foreground">
+                        No orders yet.
+                      </p>
+                    ) : (
+                      <div className="space-y-4">
+                        {orders.map((order) => (
+                          <Link
+                            key={order._id}
+                            to={`/account/orders/${order._id}`}
+                            className="border border-border rounded-xl p-4 block hover:shadow-sm transition-shadow"
+                          >
+                            <div className="flex flex-wrap items-center justify-between gap-3">
+                              <div>
+                                <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                                  {new Date(order.createdAt).toLocaleDateString()}
+                                </p>
+                                <p className="text-sm mt-1">
+                                  Order #{order._id.slice(-6)}
+                                </p>
+                              </div>
+                              <div className="text-sm capitalize">
+                                {order.status}
+                              </div>
+                            </div>
+                            <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-sm">
+                              <span>
+                                {order.items?.length || 0} items
+                              </span>
+                              <span className="font-medium">
+                                ${order.totalAmount.toFixed(2)} USD
+                              </span>
+                            </div>
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 </div>
               )}

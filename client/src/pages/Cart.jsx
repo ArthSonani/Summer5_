@@ -3,11 +3,69 @@ import Layout from "@/components/layout/Layout"
 import { useCart } from "@/context/CartContext"
 import { Minus, Plus, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useAuth } from "@/context/AuthContext"
+import { useToast } from "@/hooks/use-toast"
+import { useState } from "react"
 
 const Cart = () => {
   const { items, updateQuantity, removeFromCart, totalPrice } = useCart()
+  const { apiUrl, token } = useAuth()
+  const { toast } = useToast()
+  const [isCheckingOut, setIsCheckingOut] = useState(false)
 
   const formatPrice = (price) => `$${price.toFixed(2)} USD`
+
+  const handleCheckout = async () => {
+    if (items.length === 0 || isCheckingOut) return
+
+    if (!token) {
+      toast({
+        title: "Sign in required",
+        description: "Please sign in to complete checkout.",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setIsCheckingOut(true)
+    try {
+      const response = await fetch(`${apiUrl}/api/checkout/session`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          items: items.map((item) => ({
+            productId: item.product.id,
+            quantity: item.quantity,
+          })),
+        }),
+      })
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error("Please sign in to continue")
+        }
+        throw new Error("Failed to start checkout")
+      }
+
+      const data = await response.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        throw new Error("Missing checkout URL")
+      }
+    } catch (error) {
+      toast({
+        title: "Checkout failed",
+        description: error.message || "Please try again.",
+        variant: "destructive",
+      })
+    } finally {
+      setIsCheckingOut(false)
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -133,8 +191,12 @@ const Cart = () => {
               Shipping calculated at checkout.
             </p>
 
-            <Button className="px-12 py-6 text-base">
-              Check out
+            <Button
+              className="px-12 py-6 text-base"
+              onClick={handleCheckout}
+              disabled={isCheckingOut}
+            >
+              {isCheckingOut ? "Redirecting..." : "Check out"}
             </Button>
           </div>
         </div>

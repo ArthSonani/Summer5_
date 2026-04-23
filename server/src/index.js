@@ -8,6 +8,9 @@ import authRoutes from "./routes/auth.js";
 import productRoutes from "./routes/products.js";
 import contactRoutes from "./routes/contact.js";
 import healthRoutes from "./routes/health.js";
+import checkoutRoutes from "./routes/checkout.js";
+import orderRoutes from "./routes/orders.js";
+import cartRoutes from "./routes/cart.js";
 
 dotenv.config();
 
@@ -23,6 +26,9 @@ app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/checkout", checkoutRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
